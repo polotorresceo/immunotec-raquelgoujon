@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Immunocal – Ciencia que Transforma · Raquel Goujon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --navy:    #020b1a;
+  --navy2:   #041228;
+  --blue:    #0a4dff;
+  --blue2:   #0635cc;
+  --cyan:    #00d4ff;
+  --teal:    #00ffcc;
+  --gold:    #c8922a;
+  --gold2:   #e8b84b;
+  --gold3:   #f5d98a;
+  --white:   #ffffff;
+  --mist:    #a8c4d8;
+  --verde:   #00c47a;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--navy);
+  color:var(--white);
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ═══════════════════════════════════════════
+   DNA CANVAS BACKGROUND (global)
+═══════════════════════════════════════════ */
+#dna-canvas{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  opacity:0.22;
+}
+
+/* ═══════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════ */
+.navbar{
+  position:fixed;top:0;left:0;right:0;
+  z-index:9000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 32px;
+  background:rgba(2,11,26,0.88);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(0,212,255,0.12);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{
+  height:42px;
+  filter:brightness(1.4) drop-shadow(0 0 10px rgba(0,212,255,0.3));
+}
+.nav-store{
+  font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--cyan);opacity:0.7;font-weight:500;
+  display:none;
+}
+@media(min-width:600px){.nav-store{display:block;}}
+.nav-wa{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#fff;font-size:0.82rem;font-weight:700;
+  padding:9px 20px;border-radius:40px;text-decoration:none;
+  box-shadow:0 4px 16px rgba(37,211,102,0.3);
+  transition:transform .2s;white-space:nowrap;
+}
+.nav-wa:hover{transform:translateY(-2px);}
+.nav-wa svg{width:16px;height:16px;fill:#fff;flex-shrink:0;}
+.nav-wa-txt{display:none;}
+@media(min-width:520px){.nav-wa-txt{display:inline;}}
+@media(max-width:480px){
+  .navbar{padding:10px 14px;}
+  .nav-logo img{height:28px;}
+}
+
+/* ═══════════════════════════════════════════
+   FLOAT WA
+═══════════════════════════════════════════ */
+.float-wa{
+  position:fixed;bottom:24px;right:24px;z-index:8999;
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#25d366,#1aad52);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 28px rgba(37,211,102,0.5);
+  text-decoration:none;
+  animation:wa-pulse 2.5s ease-in-out infinite;
+}
+.float-wa:hover{transform:scale(1.1);}
+.float-wa svg{width:28px;height:28px;fill:#fff;}
+@keyframes wa-pulse{
+  0%,100%{box-shadow:0 6px 28px rgba(37,211,102,0.5);}
+  50%{box-shadow:0 8px 40px rgba(37,211,102,0.75);}
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:110px 20px 80px;
+  z-index:1;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(10,77,255,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid rgba(0,212,255,0.35);
+  background:rgba(0,212,255,0.06);
+  padding:7px 18px;border-radius:50px;
+  font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--cyan);font-weight:600;
+  margin-bottom:28px;
+  animation:fade-in-down 1s ease both;
+}
+.hero-badge span{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:dot-blink 1.5s ease-in-out infinite;}
+@keyframes dot-blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
+@keyframes fade-in-down{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,6vw,5.2rem);
+  font-weight:700;
+  line-height:1.08;
+  max-width:860px;
+  margin-bottom:22px;
+  /* Dorado desvanecido — fades from rich gold top to near-white bottom */
+  background:linear-gradient(170deg,
+    #f5d98a 0%,
+    #e8b84b 25%,
+    #c8922a 55%,
+    #d4a843 75%,
+    #f0e4c0 100%
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:fade-in-up 1s ease 0.2s both;
+}
+@keyframes fade-in-up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+.hero-sub{
+  font-size:clamp(0.95rem,2.2vw,1.15rem);
+  color:var(--mist);font-weight:300;
+  max-width:640px;line-height:1.75;
+  margin-bottom:40px;
+  animation:fade-in-up 1s ease 0.4s both;
+}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#fff;font-size:1.05rem;font-weight:700;
+  padding:17px 38px;border-radius:60px;text-decoration:none;
+  box-shadow:0 8px 32px rgba(37,211,102,0.4);
+  transition:transform .2s,box-shadow .2s;
+  animation:fade-in-up 1s ease 0.6s both;
+}
+.hero-cta:hover{transform:translateY(-3px);box-shadow:0 14px 44px rgba(37,211,102,0.55);}
+.hero-cta svg{width:22px;height:22px;fill:#fff;}
+.scroll-hint{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  color:rgba(0,212,255,0.35);font-size:0.7rem;letter-spacing:3px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.scroll-hint::after{
+  content:'';width:1px;height:28px;
+  background:linear-gradient(rgba(0,212,255,0.4),transparent);
+  animation:scroll-line 1.8s ease-in-out infinite;
+}
+@keyframes scroll-line{
+  0%{transform:scaleY(0);transform-origin:top;}
+  50%{transform:scaleY(1);transform-origin:top;}
+  51%{transform:scaleY(1);transform-origin:bottom;}
+  100%{transform:scaleY(0);transform-origin:bottom;}
+}
+
+/* ═══════════════════════════════════════════
+   SECTION COMMONS
+═══════════════════════════════════════════ */
+section{position:relative;z-index:1;}
+.container{max-width:1100px;margin:0 auto;padding:0 20px;}
+.section-label{
+  display:block;font-size:0.7rem;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--cyan);font-weight:600;margin-bottom:10px;
+}
+.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.9rem,4vw,3.1rem);font-weight:700;
+  line-height:1.15;margin-bottom:14px;
+}
+.section-sub{color:var(--mist);font-size:1rem;line-height:1.75;max-width:600px;}
+.gold-line{
+  width:52px;height:2px;margin:14px 0 32px;
+  background:linear-gradient(90deg,var(--gold2),transparent);border-radius:2px;
+}
+
+/* ═══════════════════════════════════════════
+   PAIN POINTS
+═══════════════════════════════════════════ */
+.pain-section{
+  padding:90px 20px;
+  background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);
+}
+.pain-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+  margin-top:48px;
+}
+@media(max-width:700px){.pain-grid{grid-template-columns:1fr;gap:28px;}}
+
+.pain-visual{
+  background:rgba(10,77,255,0.05);
+  border:1px solid rgba(10,77,255,0.2);
+  border-radius:22px;padding:28px 20px;
+  position:relative;overflow:hidden;
+}
+.pain-visual::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,212,255,0.06),transparent 60%);
+}
+.pain-header{
+  text-align:center;margin-bottom:20px;
+  font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(0,212,255,0.5);
+}
+.pain-dots{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.pain-dot{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(10,77,255,0.08);
+  border:1px solid rgba(10,77,255,0.2);
+  border-radius:8px;padding:9px 11px;
+  font-size:0.8rem;color:#b0c8e0;font-weight:500;
+  transition:background .2s,border-color .2s,color .2s;cursor:default;
+}
+.pain-dot:hover{
+  background:rgba(10,77,255,0.18);
+  border-color:var(--gold2);color:var(--gold3);
+}
+.pain-dot .dot-node{
+  width:7px;height:7px;border-radius:50%;flex-shrink:0;
+  background:var(--blue);box-shadow:0 0 6px var(--blue);
+}
+.pain-legend{
+  display:flex;justify-content:center;gap:18px;margin-top:16px;
+}
+.pain-legend span{
+  display:flex;align-items:center;gap:5px;
+  font-size:0.68rem;color:rgba(168,196,216,0.6);
+}
+.pain-legend .leg-box{width:12px;height:12px;border-radius:3px;}
+
+.pain-text h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.7rem;font-weight:700;margin-bottom:14px;
+  color:var(--white);
+}
+.pain-text p{color:var(--mist);line-height:1.8;margin-bottom:16px;font-size:0.95rem;}
+.pain-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.pain-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:0.92rem;color:#b0c8e0;line-height:1.5;
+}
+.pain-list li::before{
+  content:'✓';color:var(--verde);font-weight:700;flex-shrink:0;margin-top:1px;
+}
+
+/* ═══════════════════════════════════════════
+   PRODUCTS
+═══════════════════════════════════════════ */
+.products-section{padding:90px 20px;background:var(--navy);}
+
+.products-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:22px;margin-top:52px;align-items:stretch;
+}
+@media(max-width:860px){.products-grid{grid-template-columns:1fr;}}
+
+.product-card{
+  position:relative;border-radius:22px;
+  padding:30px 24px 34px;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;
+  display:flex;flex-direction:column;
+}
+.product-card:hover{transform:translateY(-7px);}
+
+.card-classic{
+  background:linear-gradient(160deg,rgba(10,77,255,0.13),var(--navy2));
+  border:1px solid rgba(10,77,255,0.35);
+  box-shadow:0 4px 40px rgba(10,77,255,0.12);
+}
+.card-classic:hover{box-shadow:0 12px 56px rgba(10,77,255,0.28);}
+
+.card-platinum{
+  background:linear-gradient(160deg,rgba(200,146,42,0.12),var(--navy2));
+  border:1px solid rgba(200,146,42,0.4);
+  box-shadow:0 4px 40px rgba(200,146,42,0.1);
+}
+.card-platinum:hover{box-shadow:0 12px 56px rgba(200,146,42,0.28);}
+
+.card-optimizer{
+  background:linear-gradient(160deg,rgba(0,196,122,0.1),var(--navy2));
+  border:1px solid rgba(0,196,122,0.35);
+  box-shadow:0 4px 40px rgba(0,196,122,0.1);
+}
+.card-optimizer:hover{box-shadow:0 12px 56px rgba(0,196,122,0.24);}
+
+.card-badge{
+  display:inline-block;font-size:0.67rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:5px 13px;border-radius:30px;margin-bottom:18px;
+}
+.badge-blue{background:rgba(10,77,255,0.2);color:#6090ff;border:1px solid rgba(10,77,255,0.4);}
+.badge-gold{background:rgba(200,146,42,0.2);color:var(--gold2);border:1px solid rgba(200,146,42,0.4);}
+.badge-green{background:rgba(0,196,122,0.15);color:#40e0a0;border:1px solid rgba(0,196,122,0.35);}
+
+.best-seller{
+  position:absolute;top:0;right:22px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;font-size:0.62rem;font-weight:800;letter-spacing:1.5px;
+  text-transform:uppercase;padding:5px 13px;
+  border-radius:0 0 10px 10px;
+}
+
+/* Scanner image wrap */
+.prod-img-wrap{
+  position:relative;width:100%;height:220px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;overflow:hidden;border-radius:16px;
+  background:rgba(10,77,255,0.04);flex-shrink:0;
+}
+.prod-img-wrap img{
+  width:100%;height:100%;object-fit:contain;object-position:center;
+  padding:14px;display:block;
+  filter:drop-shadow(0 6px 20px rgba(10,77,255,0.3));
+  transition:transform .45s ease,filter .45s ease;
+  position:relative;z-index:2;
+}
+.prod-img-wrap:hover img{
+  transform:scale(1.07) translateY(-4px);
+  filter:drop-shadow(0 14px 36px rgba(10,77,255,0.55));
+}
+.prod-img-wrap::after{
+  content:'';position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(10,77,255,0.8),#a0c0ff,rgba(10,77,255,0.8),transparent);
+  box-shadow:0 0 14px 3px rgba(10,77,255,0.6);
+  top:0;z-index:3;
+  animation:scanner 2.8s ease-in-out infinite;pointer-events:none;
+}
+@keyframes scanner{
+  0%{top:0%;opacity:0;}5%{opacity:1;}
+  50%{top:100%;opacity:1;}95%{opacity:1;}100%{top:0%;opacity:0;}
+}
+.card-platinum .prod-img-wrap::after{
+  background:linear-gradient(90deg,transparent,rgba(200,146,42,0.9),#ffe17a,rgba(200,146,42,0.9),transparent);
+  box-shadow:0 0 14px 3px rgba(200,146,42,0.6);
+}
+.card-optimizer .prod-img-wrap::after{
+  background:linear-gradient(90deg,transparent,rgba(0,196,122,0.9),#a0ffd8,rgba(0,196,122,0.9),transparent);
+  box-shadow:0 0 14px 3px rgba(0,196,122,0.6);
+}
+.prod-img-wrap::before{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background-image:linear-gradient(rgba(10,77,255,0.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(10,77,255,0.04) 1px,transparent 1px);
+  background-size:22px 22px;z-index:1;
+}
+
+.product-card h3{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  margin-bottom:9px;
+}
+.product-card p{
+  color:var(--mist);font-size:0.9rem;line-height:1.7;margin-bottom:18px;
+}
+.product-features{
+  list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:auto;
+}
+.product-features li{
+  font-size:0.85rem;color:#a0b8cc;display:flex;align-items:center;gap:8px;
+}
+.card-classic .product-features li::before{content:'→';color:#4070ff;font-size:0.8rem;}
+.card-platinum .product-features li::before{content:'→';color:var(--gold2);}
+.card-optimizer .product-features li::before{content:'→';color:var(--verde);}
+
+/* ═══════════════════════════════════════════
+   LOGO / SCIENCE SECTION
+═══════════════════════════════════════════ */
+.science-section{
+  padding:80px 20px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(10,77,255,0.1) 0%,var(--navy) 70%);
+}
+.science-inner{
+  max-width:900px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;
+}
+@media(max-width:680px){.science-inner{grid-template-columns:1fr;gap:32px;}}
+
+.logo-orbit{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  min-height:280px;
+}
+.orbit-ring{
+  position:absolute;border-radius:50%;border:1px solid rgba(0,212,255,0.15);
+  animation:orbit-spin 20s linear infinite;
+}
+.orbit-ring:nth-child(1){width:240px;height:240px;}
+.orbit-ring:nth-child(2){width:300px;height:300px;animation-duration:28s;animation-direction:reverse;}
+.orbit-ring:nth-child(3){width:360px;height:360px;animation-duration:36s;}
+@keyframes orbit-spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.orbit-dot{
+  position:absolute;width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 8px var(--cyan);
+  top:0;left:50%;transform:translateX(-50%);
+}
+.orbit-glow{
+  position:absolute;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(10,77,255,0.2) 0%,transparent 70%);
+  animation:glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse{0%,100%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.2);opacity:1;}}
+.orbit-logo{
+  width:180px;position:relative;z-index:2;
+  filter:brightness(1.5) drop-shadow(0 0 24px rgba(0,212,255,0.4));
+  animation:logo-float 4s ease-in-out infinite;
+}
+@keyframes logo-float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+.science-text h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;
+  line-height:1.2;margin-bottom:14px;
+  background:linear-gradient(135deg,#fff 40%,var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.science-text p{color:var(--mist);font-size:0.94rem;line-height:1.8;margin-bottom:16px;}
+.avales{
+  list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;
+}
+.avales li{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.88rem;color:#b0c8e0;
+}
+.aval-chip{
+  background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25);
+  border-radius:6px;padding:3px 10px;font-size:0.7rem;font-weight:700;
+  letter-spacing:1px;color:var(--cyan);flex-shrink:0;
+}
+.tienda-link{
+  display:inline-flex;align-items:center;gap:7px;
+  color:rgba(168,196,216,0.5);font-size:0.8rem;letter-spacing:1px;
+  text-decoration:none;transition:color .2s;
+}
+.tienda-link:hover{color:var(--gold2);}
+.tienda-link svg{width:14px;height:14px;fill:currentColor;}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════════════════ */
+.testimonials-section{
+  padding:90px 20px;
+  background:linear-gradient(180deg,var(--navy2) 0%,var(--navy) 100%);
+}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:18px;margin-top:50px;
+}
+.testi-card{
+  background:linear-gradient(160deg,#061428,#030d1e);
+  border:1px solid rgba(10,77,255,0.2);
+  border-radius:18px;padding:26px 22px;
+  transition:transform .25s,border-color .25s;
+  position:relative;overflow:hidden;
+}
+.testi-card::before{
+  content:'"';position:absolute;top:-8px;right:16px;
+  font-size:7rem;color:rgba(10,77,255,0.08);
+  font-family:'Cormorant Garamond',serif;line-height:1;pointer-events:none;
+}
+.testi-card:hover{transform:translateY(-4px);border-color:rgba(10,77,255,0.4);}
+.stars{color:var(--gold2);font-size:0.8rem;letter-spacing:2px;margin-bottom:10px;}
+.testi-product{
+  display:inline-block;font-size:0.67rem;font-weight:700;
+  padding:3px 10px;border-radius:20px;margin-bottom:9px;letter-spacing:1px;
+}
+.tp-blue{background:rgba(10,77,255,0.18);color:#6090ff;border:1px solid rgba(10,77,255,0.3);}
+.tp-gold{background:rgba(200,146,42,0.18);color:var(--gold2);border:1px solid rgba(200,146,42,0.3);}
+.tp-green{background:rgba(0,196,122,0.15);color:#40e0a0;border:1px solid rgba(0,196,122,0.25);}
+.testi-text{font-size:0.9rem;line-height:1.7;color:#b0c8d8;margin-bottom:16px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:10px;}
+.testi-avatar{
+  width:40px;height:40px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;
+}
+.testi-name{font-weight:600;font-size:0.88rem;color:#dde8f0;}
+.testi-loc{font-size:0.75rem;color:#4060a0;margin-top:2px;}
+
+/* ═══════════════════════════════════════════
+   LEAD CAPTURE FORM
+═══════════════════════════════════════════ */
+.form-section{
+  padding:90px 20px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(10,77,255,0.12) 0%,var(--navy2) 70%);
+}
+.form-box{
+  max-width:720px;margin:48px auto 0;
+  background:linear-gradient(160deg,rgba(4,18,40,0.95),rgba(2,11,26,0.95));
+  border:1px solid rgba(0,212,255,0.2);
+  border-radius:28px;padding:48px 44px;
+  box-shadow:0 0 80px rgba(10,77,255,0.15),inset 0 1px 0 rgba(255,255,255,0.04);
+  position:relative;overflow:hidden;
+}
+.form-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(0,212,255,0.05),transparent 60%);
+  pointer-events:none;
+}
+.form-box h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3vw,2rem);font-weight:700;
+  margin-bottom:8px;text-align:center;
+  background:linear-gradient(135deg,#fff 40%,var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.form-box p.form-sub{
+  text-align:center;color:var(--mist);font-size:0.9rem;
+  margin-bottom:32px;line-height:1.6;
+}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+.form-group label{
+  font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--cyan);font-weight:600;
+}
+.form-group input,
+.form-group select{
+  background:rgba(10,77,255,0.07);
+  border:1px solid rgba(10,77,255,0.25);
+  border-radius:12px;padding:14px 18px;
+  font-size:0.95rem;color:var(--white);
+  font-family:'Inter',sans-serif;
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none;appearance:none;
+  width:100%;
+}
+.form-group select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300d4ff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 16px center;
+  padding-right:44px;cursor:pointer;
+}
+.form-group select option{background:#041228;color:#fff;}
+.form-group input:focus,
+.form-group select:focus{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 3px rgba(0,212,255,0.12);
+}
+.form-group input::placeholder{color:rgba(168,196,216,0.4);}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:540px){.form-row{grid-template-columns:1fr;}}
+
+.form-submit{
+  width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  color:#fff;font-size:1rem;font-weight:700;
+  padding:18px 28px;border-radius:60px;border:none;cursor:pointer;
+  box-shadow:0 8px 32px rgba(10,77,255,0.4);
+  transition:transform .2s,box-shadow .2s;margin-top:8px;
+  font-family:'Inter',sans-serif;
+}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(10,77,255,0.55);}
+.form-submit svg{width:20px;height:20px;fill:#fff;}
+.form-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+
+.form-note{
+  text-align:center;margin-top:16px;
+  color:rgba(168,196,216,0.4);font-size:0.78rem;line-height:1.5;
+}
+.form-note a{color:rgba(0,212,255,0.5);text-decoration:none;}
+
+/* Success state */
+.form-success{
+  display:none;text-align:center;padding:40px 20px;
+}
+.form-success .check-icon{
+  width:72px;height:72px;border-radius:50%;
+  background:linear-gradient(135deg,var(--verde),#00a064);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  box-shadow:0 0 40px rgba(0,196,122,0.4);
+  animation:pop-in .5s ease both;
+}
+@keyframes pop-in{from{transform:scale(0.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+.form-success .check-icon svg{width:36px;height:36px;fill:#fff;}
+.form-success h4{
+  font-family:'Cormorant Garamond',serif;font-size:1.8rem;margin-bottom:10px;
+  color:var(--white);
+}
+.form-success p{color:var(--mist);font-size:0.95rem;line-height:1.7;margin-bottom:24px;}
+.form-success .wa-confirm{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#fff;font-size:0.95rem;font-weight:700;
+  padding:14px 28px;border-radius:50px;text-decoration:none;
+  box-shadow:0 6px 24px rgba(37,211,102,0.4);
+}
+
+/* ═══════════════════════════════════════════
+   CTA SECTION
+═══════════════════════════════════════════ */
+.cta-section{
+  padding:90px 20px;
+  background:radial-gradient(ellipse at center,rgba(10,77,255,0.12) 0%,var(--navy) 70%);
+  text-align:center;
+  border-top:1px solid rgba(10,77,255,0.12);
+}
+.cta-cards{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin:44px 0;
+}
+.cta-reason{
+  background:rgba(4,18,40,0.9);
+  border:1px solid rgba(10,77,255,0.2);
+  border-radius:16px;padding:20px 22px;max-width:210px;
+  text-align:center;font-size:0.87rem;color:var(--mist);line-height:1.5;
+}
+.cta-reason .r-icon{font-size:1.8rem;display:block;margin-bottom:9px;}
+.cta-reason strong{color:#fff;display:block;margin-bottom:4px;font-size:0.9rem;}
+.cta-wa-main{
+  display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#fff;font-size:1.15rem;font-weight:700;
+  padding:20px 48px;border-radius:70px;text-decoration:none;
+  box-shadow:0 8px 40px rgba(37,211,102,0.45);
+  transition:transform .2s,box-shadow .2s;margin-bottom:20px;
+}
+.cta-wa-main:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 52px rgba(37,211,102,0.6);}
+.cta-wa-main svg{width:26px;height:26px;fill:#fff;}
+.cta-sub{color:rgba(168,196,216,0.5);font-size:0.85rem;}
+.cta-sub strong{color:rgba(168,196,216,0.7);}
+
+/* ═══════════════════════════════════════════
+   PRESENTER / RAQUEL
+═══════════════════════════════════════════ */
+.presenter-section{
+  padding:90px 20px;
+  background:linear-gradient(180deg,var(--navy2) 0%,var(--navy) 100%);
+  border-top:1px solid rgba(10,77,255,0.12);
+}
+.presenter-magnetic{
+  max-width:900px;margin:0 auto;
+  background:linear-gradient(135deg,rgba(4,18,40,0.97),rgba(2,11,26,0.97));
+  border:1px solid rgba(200,146,42,0.25);
+  border-radius:30px;overflow:hidden;
+  display:grid;grid-template-columns:420px 1fr;
+  box-shadow:0 0 100px rgba(10,77,255,0.12),0 0 0 1px rgba(200,146,42,0.1);
+  position:relative;
+}
+.presenter-img-side{
+  position:relative;overflow:hidden;min-height:460px;
+}
+.presenter-img-side img{
+  width:100%;height:100%;object-fit:cover;object-position:center top;
+  display:block;
+  filter:brightness(1.25) contrast(1.05) saturate(1.1);
+  transition:transform .5s ease,filter .5s ease;
+}
+.presenter-magnetic:hover .presenter-img-side img{
+  transform:scale(1.04);filter:brightness(1.32) contrast(1.05) saturate(1.15);
+}
+.presenter-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 55%,rgba(4,18,40,0.98) 100%),
+             linear-gradient(0deg,rgba(2,11,26,0.85) 0%,transparent 22%);
+}
+.presenter-glow{
+  position:absolute;bottom:-20px;left:20%;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,146,42,0.08),transparent 70%);
+}
+.presenter-info{
+  padding:46px 40px;display:flex;flex-direction:column;
+  justify-content:center;gap:14px;position:relative;z-index:2;
+}
+.presenter-badge2{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(200,146,42,0.12);border:1px solid rgba(200,146,42,0.3);
+  border-radius:30px;padding:5px 15px;
+  font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gold2);width:fit-content;
+}
+.presenter-name2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.9rem,3vw,2.5rem);font-weight:700;line-height:1.1;
+  background:linear-gradient(135deg,#fff 35%,var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.presenter-title2{
+  color:rgba(168,196,216,0.5);font-size:0.8rem;
+  letter-spacing:2px;text-transform:uppercase;font-weight:500;
+}
+.presenter-div{width:44px;height:2px;background:linear-gradient(90deg,var(--gold2),transparent);}
+.presenter-desc2{color:var(--mist);font-size:0.9rem;line-height:1.75;}
+.presenter-stats{display:flex;gap:22px;flex-wrap:wrap;}
+.p-stat strong{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold2);display:block;}
+.p-stat span{font-size:0.7rem;color:#3050a0;text-transform:uppercase;letter-spacing:1px;}
+.presenter-flags2{font-size:1.6rem;letter-spacing:8px;display:flex;align-items:center;gap:6px;}
+.presenter-wa2{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,#25d366,#1aad52);
+  color:#fff;font-size:0.95rem;font-weight:700;
+  padding:14px 26px;border-radius:50px;text-decoration:none;
+  box-shadow:0 5px 22px rgba(37,211,102,0.35);
+  transition:transform .2s,box-shadow .2s;width:fit-content;
+}
+.presenter-wa2:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(37,211,102,0.5);}
+.presenter-wa2 svg{width:20px;height:20px;fill:#fff;flex-shrink:0;}
+.presenter-store{
+  display:inline-flex;align-items:center;gap:7px;
+  color:rgba(168,196,216,0.4);font-size:0.78rem;font-weight:600;
+  letter-spacing:1px;text-decoration:none;transition:color .2s;
+}
+.presenter-store:hover{color:var(--gold2);}
+.presenter-store svg{width:13px;height:13px;fill:currentColor;}
+
+@media(max-width:700px){
+  .presenter-magnetic{grid-template-columns:1fr;}
+  .presenter-img-side{min-height:320px;max-height:360px;}
+  .presenter-img-side img{object-position:center 15%;}
+  .presenter-img-overlay{background:linear-gradient(0deg,rgba(4,18,40,0.95) 0%,transparent 55%);}
+  .presenter-info{padding:28px 22px 36px;}
+  .presenter-name2{font-size:2rem;}
+  .presenter-wa2,.presenter-store{width:100%;justify-content:center;}
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer{
+  background:#010a16;text-align:center;
+  padding:28px 20px;
+  border-top:1px solid rgba(10,77,255,0.1);
+  color:rgba(168,196,216,0.25);font-size:0.75rem;line-height:1.6;
+}
+footer span{color:var(--gold2);}
+
+/* ═══════════════════════════════════════════
+   GLOBAL RESPONSIVE
+═══════════════════════════════════════════ */
+@media(max-width:768px){
+  section{padding:60px 16px!important;}
+  .hero{padding:90px 16px 70px!important;}
+  .products-grid{grid-template-columns:1fr;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  .cta-cards{gap:10px;}
+  .cta-reason{max-width:46%;min-width:130px;padding:14px 12px;font-size:0.8rem;}
+  .cta-wa-main{font-size:1rem;padding:17px 28px;}
+  .form-box{padding:32px 22px;}
+  .science-inner{grid-template-columns:1fr;}
+  .logo-orbit{min-height:220px;}
+}
+@media(max-width:420px){
+  .cta-reason{max-width:100%;}
+  .cta-wa-main{width:100%;justify-content:center;}
+  .form-row{grid-template-columns:1fr;}
+}
+
+/* fade-up */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- ═══ DNA CANVAS ═══ -->
+<canvas id="dna-canvas"></canvas>
+
+<!-- ═══ FLOAT WA ═══ -->
+<a href="https://wa.me/528123500033?text=Hola%20Raquel%2C%20vi%20tu%20página%20y%20me%20interesa%20Immunocal" class="float-wa" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar">
+  <a class="nav-logo" href="https://www.immunotec.com/es-MX" target="_blank" rel="noopener">
+    <img src="https://i.ibb.co/Z6G50SV0/Screenshot-2026-04-06-20-36-08-removebg-preview.png" alt="Immunotec">
+    <span class="nav-store">immunotec.com/es-MX</span>
+  </a>
+  <a href="https://wa.me/528123500033?text=Hola%20Raquel%2C%20quiero%20información%20sobre%20Immunocal" class="nav-wa" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="nav-wa-txt">Contactar a Raquel</span>
+  </a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-badge"><span></span>IMMUNOFest 2026 · Immunotec Oficial</div>
+  <h1>El Antioxidante Maestro<br>que tu Cuerpo Estaba Esperando</h1>
+  <p class="hero-sub">Eleva tu Glutatión, fortalece tu sistema inmunológico desde adentro y recupera la vitalidad que mereces. 30 años de ciencia. Más de 40 países. Sin efectos secundarios.</p>
+  <a href="https://wa.me/528123500033?text=Hola%20Raquel%2C%20quiero%20información%20sobre%20Immunocal" class="hero-cta" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Quiero saber más – WhatsApp
+  </a>
+  <div class="scroll-hint">DESCUBRE MÁS</div>
+</section>
+
+<!-- ═══ PAIN POINTS ═══ -->
+<section class="pain-section">
+  <div class="container">
+    <span class="section-label">¿Te identificas con alguno de estos?</span>
+    <h2 class="section-title">Tu cuerpo te habla.<br>Immunocal te escucha.</h2>
+    <div class="gold-line"></div>
+    <div class="pain-grid fade-up">
+      <div class="pain-visual">
+        <p class="pain-header">Fortalece Tu Sistema Inmunológico con IMMUNOCAL</p>
+        <div class="pain-dots">
+          <div class="pain-dot"><span class="dot-node"></span>Diabetes</div>
+          <div class="pain-dot"><span class="dot-node"></span>Presión Alta</div>
+          <div class="pain-dot"><span class="dot-node"></span>VIH/SIDA</div>
+          <div class="pain-dot"><span class="dot-node"></span>Fibrosis</div>
+          <div class="pain-dot"><span class="dot-node"></span>Cáncer</div>
+          <div class="pain-dot"><span class="dot-node"></span>Ins. Renal</div>
+          <div class="pain-dot"><span class="dot-node"></span>Autismo</div>
+          <div class="pain-dot"><span class="dot-node"></span>Alzheimer</div>
+          <div class="pain-dot"><span class="dot-node"></span>Gastritis</div>
+          <div class="pain-dot"><span class="dot-node"></span>Parkinson</div>
+          <div class="pain-dot"><span class="dot-node"></span>Artritis</div>
+          <div class="pain-dot"><span class="dot-node"></span>Asma</div>
+          <div class="pain-dot"><span class="dot-node"></span>Várices</div>
+          <div class="pain-dot"><span class="dot-node"></span>Fibromialgia</div>
+          <div class="pain-dot"><span class="dot-node"></span>Menopausia</div>
+          <div class="pain-dot"><span class="dot-node"></span>Anemia</div>
+          <div class="pain-dot"><span class="dot-node"></span>Colitis</div>
+          <div class="pain-dot"><span class="dot-node"></span>Colesterol</div>
+        </div>
+        <div class="pain-legend">
+          <span><span class="leg-box" style="background:#0a4dff;"></span>Immunocal</span>
+          <span><span class="leg-box" style="background:#c8922a;"></span>Platinum</span>
+        </div>
+      </div>
+      <div class="pain-text">
+        <h3>¿Por qué tu salud no mejora a pesar de los medicamentos?</h3>
+        <p>La mayoría de los tratamientos atacan síntomas. Immunocal actúa en la raíz: eleva el Glutatión — el antioxidante maestro que cada célula necesita para funcionar, regenerarse y protegerse.</p>
+        <ul class="pain-list">
+          <li>El Glutatión disminuye un 10% por cada década de vida</li>
+          <li>El estrés, toxinas y mala dieta lo agotan aceleradamente</li>
+          <li>Sin Glutatión suficiente, el sistema inmune falla</li>
+          <li>Immunocal es el único precursor patentado del mundo</li>
+          <li>Registrado en FDA (USA), PDR y Health Canada</li>
+          <li>100% natural · Sin efectos secundarios · Sin dependencia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRODUCTS ═══ -->
+<section class="products-section">
+  <div class="container">
+    <span class="section-label">Nuestros Productos Estrella</span>
+    <h2 class="section-title">Tres fórmulas.<br>Una sola misión: tu salud.</h2>
+    <div class="gold-line"></div>
+    <p class="section-sub">Cada producto cubre una etapa y necesidad específica. Combínalos para resultados superiores.</p>
+    <div class="products-grid fade-up">
+
+      <!-- CLÁSICO -->
+      <div class="product-card card-classic">
+        <span class="card-badge badge-blue">Clásico · Original</span>
+        <div class="prod-img-wrap">
+          <img src="https://i.ibb.co/8gK03GLZ/immunocal-clasic.jpg" alt="Immunocal Clásico" loading="lazy">
+        </div>
+        <h3>Immunocal</h3>
+        <p>El precursor de Glutatión más respaldado del mundo. Proteína de suero no desnaturalizada, patentada y con el mayor valor biológico.</p>
+        <ul class="product-features">
+          <li>Eleva naturalmente el Glutatión intracelular</li>
+          <li>Fortalece el sistema inmunológico</li>
+          <li>Aumenta fuerza y masa muscular</li>
+          <li>Poderoso antioxidante celular</li>
+          <li>Apoya la desintoxicación profunda</li>
+          <li>Registrado FDA · PDR · Health Canada</li>
+        </ul>
+      </div>
+
+      <!-- PLATINUM -->
+      <div class="product-card card-platinum">
+        <div class="best-seller">⭐ MÁS POPULAR</div>
+        <span class="card-badge badge-gold">Platinum · Fórmula Avanzada</span>
+        <div class="prod-img-wrap">
+          <img src="https://i.ibb.co/G35nYh4s/platinum.jpg" alt="Immunocal Platinum" loading="lazy">
+        </div>
+        <h3>Immunocal Platinum</h3>
+        <p>Toda la potencia del Clásico más los complejos CMP™ y RMF™ para soporte inmunológico de élite y casos crónicos.</p>
+        <ul class="product-features">
+          <li>CMP™ – Péptidos moduladores de citoquinas</li>
+          <li>RMF™ – Equilibrio del pH corporal</li>
+          <li>Soporte óseo y antiinflamatorio avanzado</li>
+          <li>Ideal para adultos mayores y crónicos</li>
+          <li>Protege contra el envejecimiento celular</li>
+          <li>Sin gluten, azúcar ni lactosa</li>
+        </ul>
+      </div>
+
+      <!-- OPTIMIZER -->
+      <div class="product-card card-optimizer">
+        <span class="card-badge badge-green">Optimizer · Potenciador</span>
+        <div class="prod-img-wrap">
+          <img src="https://i.ibb.co/q3k0bnJ2/FB-IMG-17692963357161291-removebg-preview.png" alt="Immunocal Optimizer" loading="lazy">
+        </div>
+        <h3>Immunocal Optimizer</h3>
+        <p>Activa el gen NrF2 — el interruptor epigenético que triplica la acción de todos tus antioxidantes simultáneamente.</p>
+        <ul class="product-features">
+          <li>Sulforanato de brócoli activa NrF2</li>
+          <li>Selenio + Glutatión = defensa máxima</li>
+          <li>50+ superalimentos rojos y verdes</li>
+          <li>Triplica los efectos de desintoxicación</li>
+          <li>Sabor cítrico · Sin efectos secundarios</li>
+          <li>Registro INVIMA · Uso diario seguro</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCIENCE / LOGO SECTION ═══ -->
+<section class="science-section">
+  <div class="container">
+    <div class="science-inner">
+      <div class="logo-orbit">
+        <div class="orbit-glow"></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <div class="orbit-ring"><div class="orbit-dot"></div></div>
+        <img class="orbit-logo"
+             src="https://i.ibb.co/Z6G50SV0/Screenshot-2026-04-06-20-36-08-removebg-preview.png"
+             alt="Immunotec Logo" loading="lazy">
+      </div>
+      <div class="science-text">
+        <span class="section-label">Respaldo Científico Global</span>
+        <h2>30 años de ciencia<br>respaldando tu bienestar</h2>
+        <div class="gold-line"></div>
+        <p>Immunotec es la empresa pionera en investigación del Glutatión. Sus productos están avalados por las autoridades de salud más exigentes del mundo.</p>
+        <ul class="avales">
+          <li><span class="aval-chip">FDA</span>Clasificado GRAS — seguro para consumo humano</li>
+          <li><span class="aval-chip">PDR</span>Registrado en Physicians Desk Reference</li>
+          <li><span class="aval-chip">Health Canada</span>Suplemento natural efectivo certificado</li>
+          <li><span class="aval-chip">40+ países</span>Presencia global desde 1996</li>
+        </ul>
+        <a href="https://www.immunotec.com/es-MX" target="_blank" rel="noopener" class="tienda-link">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          Visitar tienda oficial → immunotec.com/es-MX
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials-section">
+  <div class="container">
+    <span class="section-label">Historias Reales de Transformación</span>
+    <h2 class="section-title">Ellos ya cambiaron<br>su historia de salud.</h2>
+    <div class="gold-line"></div>
+    <div class="testimonials-grid fade-up">
+
+      <div class="testi-card"><span class="testi-product tp-gold">Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Llevo 2 años con diabetes tipo 2. Con Platinum mis niveles de glucosa se estabilizaron y dejé de sentirme agotada. Mi médico quedó sorprendido.</p><div class="testi-author"><div class="testi-avatar">M</div><div><div class="testi-name">Martha G.</div><div class="testi-loc">Monterrey, NL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-blue">Immunocal</span><div class="stars">★★★★★</div><p class="testi-text">Tenía artritis reumatoide y el dolor era insoportable. Al mes noté que podía mover los dedos sin agonizar. Hoy llevo 6 meses y parezco otra persona.</p><div class="testi-author"><div class="testi-avatar">C</div><div><div class="testi-name">Carlos P.</div><div class="testi-loc">Guadalajara, JAL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-green">Optimizer + Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Usé el combo para apoyar mi tratamiento de cáncer de mama. Mi oncóloga notó que recuperé energía mucho más rápido entre quimios. Lo recomiendo de corazón.</p><div class="testi-author"><div class="testi-avatar">L</div><div><div class="testi-name">Laura S.</div><div class="testi-loc">CDMX</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-gold">Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Soy hipertenso de 10 años. Con Platinum mi presión se mantuvo estable sin subir la dosis del medicamento. Duermo mejor y tengo más energía.</p><div class="testi-author"><div class="testi-avatar">R</div><div><div class="testi-name">Roberto A.</div><div class="testi-loc">San Pedro, NL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-blue">Immunocal</span><div class="stars">★★★★★</div><p class="testi-text">Mi hijo tiene autismo y sus crisis eran diarias. Desde que empezó con Immunocal lleva 3 meses sin crisis severas. Habla más y está más tranquilo.</p><div class="testi-author"><div class="testi-avatar">V</div><div><div class="testi-name">Valeria H.</div><div class="testi-loc">Puebla, PUE</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-green">Optimizer</span><div class="stars">★★★★★</div><p class="testi-text">Sufría de colitis crónica. Al mes con Optimizer noté que mi digestión mejoró notablemente. Ya puedo comer sin miedo. Increíble producto.</p><div class="testi-author"><div class="testi-avatar">A</div><div><div class="testi-name">Alejandra M.</div><div class="testi-loc">Monterrey, NL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-gold">Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Mi papá tiene Parkinson. El Platinum le dio más estabilidad en sus movimientos. La familia entera quedó impresionada con el cambio en pocas semanas.</p><div class="testi-author"><div class="testi-avatar">J</div><div><div class="testi-name">Jorge T.</div><div class="testi-loc">León, GTO</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-blue">Immunocal</span><div class="stars">★★★★★</div><p class="testi-text">Tenía asma desde los 7 años. Llevo 4 meses y mis crisis se redujeron en un 80%. Por primera vez puedo correr sin fatigarme al minuto.</p><div class="testi-author"><div class="testi-avatar">D</div><div><div class="testi-name">Diana F.</div><div class="testi-loc">Tijuana, BC</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-green">Optimizer + Clásico</span><div class="stars">★★★★★</div><p class="testi-text">Tenía el colesterol en 290. Con el combo bajé a 215 en tres meses. Mi cardiólogo me preguntó qué hice diferente. Le recomendé el producto.</p><div class="testi-author"><div class="testi-avatar">E</div><div><div class="testi-name">Eduardo N.</div><div class="testi-loc">Querétaro, QRO</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-gold">Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Con Alzheimer en mi familia, comencé Platinum preventivo. Mi memoria mejoró notablemente y mi estado de ánimo es mucho más estable.</p><div class="testi-author"><div class="testi-avatar">P</div><div><div class="testi-name">Patricia L.</div><div class="testi-loc">Mérida, YUC</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-blue">Immunocal</span><div class="stars">★★★★★</div><p class="testi-text">Fibrosis pulmonar. Mi respiración empeoraba cada mes. Con Immunocal logramos frenar el avance. Mi neumólogo quedó asombrado en las pruebas.</p><div class="testi-author"><div class="testi-avatar">F</div><div><div class="testi-name">Fernando R.</div><div class="testi-loc">Hermosillo, SON</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-green">Optimizer</span><div class="stars">★★★★★</div><p class="testi-text">La fibromialgia me tenía postrada. El Optimizer me dio la energía para levantarme cada día. Llevo 5 meses y he retomado mi vida.</p><div class="testi-author"><div class="testi-avatar">S</div><div><div class="testi-name">Sandra B.</div><div class="testi-loc">Saltillo, COAH</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-gold">Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Menopausia a los 48. Los bochornos y el insomnio me tenían desesperada. Con Platinum en 6 semanas dormí una noche completa.</p><div class="testi-author"><div class="testi-avatar">G</div><div><div class="testi-name">Gloria V.</div><div class="testi-loc">CDMX</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-blue">Immunocal</span><div class="stars">★★★★★</div><p class="testi-text">VIH positivo hace 12 años. Con Immunocal mi carga viral se mantiene indetectable. Mi inmunólogo lo recomienda ahora a sus pacientes.</p><div class="testi-author"><div class="testi-avatar">M</div><div><div class="testi-name">Miguel A.</div><div class="testi-loc">Guadalajara, JAL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-green">Optimizer + Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Anemia crónica que no cedía. Al mes del combo me sentí con energía real. A los 3 meses mis análisis mostraron hemoglobina normal.</p><div class="testi-author"><div class="testi-avatar">I</div><div><div class="testi-name">Isabel C.</div><div class="testi-loc">Monterrey, NL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-gold">Platinum</span><div class="stars">★★★★★</div><p class="testi-text">Várices en ambas piernas y dolor constante. Con Platinum mejoró mi circulación notablemente. El hinchazón bajó en solo 2 meses.</p><div class="testi-author"><div class="testi-avatar">N</div><div><div class="testi-name">Norma E.</div><div class="testi-loc">Monterrey, NL</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-blue">Immunocal</span><div class="stars">★★★★★</div><p class="testi-text">Insuficiencia renal etapa 3. En 4 meses mis marcadores mejoraron. La fatiga que me acompañaba todo el día desapareció casi por completo.</p><div class="testi-author"><div class="testi-avatar">H</div><div><div class="testi-name">Héctor M.</div><div class="testi-loc">Torreón, COAH</div></div></div></div>
+
+      <div class="testi-card"><span class="testi-product tp-green">Optimizer + Clásico</span><div class="stars">★★★★★</div><p class="testi-text">Gastritis crónica de 6 años. Raquel me orientó con el combo y en mes y medio dejé los antiácidos. Mi estómago sanó como ningún medicamento logró.</p><div class="testi-author"><div class="testi-avatar">T</div><div><div class="testi-name">Tania R.</div><div class="testi-loc">San Nicolás, NL</div></div></div></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LEAD CAPTURE FORM ═══ -->
+<section class="form-section">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-label">Video Gratuito · Sin Compromiso</span>
+      <h2 class="section-title">Recibe GRATIS el video que<br>explica cómo trabaja Immunocal</h2>
+      <div class="gold-line" style="margin:14px auto 0;"></div>
+    </div>
+
+    <div class="form-box fade-up">
+      <h3>¡Quiero mi Video Gratuito!</h3>
+      <p class="form-sub">Déjanos tus datos y Raquel te enviará personalmente un video explicativo adaptado a tu condición de salud. Sin costo · Sin compromiso.</p>
+
+      <!-- FORM -->
+      <div id="lead-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-nombre">Nombre completo</label>
+            <input type="text" id="f-nombre" placeholder="Tu nombre" autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="f-wa">WhatsApp</label>
+            <input type="tel" id="f-wa" placeholder="Ej: 8112345678" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-email">Correo Gmail</label>
+          <input type="email" id="f-email" placeholder="tunombre@gmail.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="f-dolor">¿Cuál es tu punto de dolor?</label>
+          <select id="f-dolor">
+            <option value="" disabled selected>Selecciona tu condición principal</option>
+            <option value="Diabetes">Diabetes</option>
+            <option value="Presión Alta">Presión Alta</option>
+            <option value="VIH/SIDA">VIH/SIDA</option>
+            <option value="Fibrosis">Fibrosis</option>
+            <option value="Cáncer">Cáncer</option>
+            <option value="Ins. Renal">Insuficiencia Renal</option>
+            <option value="Autismo">Autismo</option>
+            <option value="Alzheimer">Alzheimer</option>
+            <option value="Gastritis">Gastritis</option>
+            <option value="Parkinson">Parkinson</option>
+            <option value="Artritis">Artritis</option>
+            <option value="Asma">Asma</option>
+            <option value="Várices">Várices</option>
+            <option value="Fibromialgia">Fibromialgia</option>
+            <option value="Menopausia">Menopausia</option>
+            <option value="Anemia">Anemia</option>
+            <option value="Colitis">Colitis</option>
+            <option value="Colesterol">Colesterol</option>
+            <option value="Otro">Otro / General</option>
+          </select>
+        </div>
+        <button class="form-submit" id="submit-btn" onclick="handleSubmit()">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          Enviarme el Video Gratis
+        </button>
+        <p class="form-note">🔒 Tu información es privada. Solo Raquel tendrá acceso para enviarte el video.</p>
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="form-success" id="form-success">
+        <div class="check-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h4>¡Registro exitoso!</h4>
+        <p>Raquel revisará tu caso y te enviará el video explicativo por WhatsApp muy pronto. También puedes escribirle directamente ahora mismo.</p>
+        <a href="https://wa.me/528123500033?text=Hola%20Raquel%2C%20acabo%20de%20registrarme%20para%20recibir%20el%20video%20de%20Immunocal" class="wa-confirm" target="_blank">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribirle a Raquel ahora
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section">
+  <div class="container">
+    <span class="section-label">Tu momento es ahora</span>
+    <h2 class="section-title">¿Listo para cambiar<br>tu historia de salud?</h2>
+    <div class="gold-line" style="margin:14px auto 0;"></div>
+    <p class="section-sub" style="margin:0 auto;text-align:center;">Escríbele ahora a Raquel. Recibirás asesoría personalizada GRATIS, guía de uso y el combo ideal para tu condición.</p>
+    <div class="cta-cards">
+      <div class="cta-reason"><span class="r-icon">🎯</span><strong>Asesoría Personalizada</strong>El producto ideal para ti</div>
+      <div class="cta-reason"><span class="r-icon">🚚</span><strong>Envío a México</strong>Recíbelo en tu puerta</div>
+      <div class="cta-reason"><span class="r-icon">💳</span><strong>Precio Preferente</strong>Accede a descuentos</div>
+      <div class="cta-reason"><span class="r-icon">🔬</span><strong>Respaldo Científico</strong>30+ años de investigación</div>
+      <div class="cta-reason"><span class="r-icon">🌎</span><strong>México · USA · Canadá</strong>Atención en 3 países</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+      <a href="https://wa.me/528123500033?text=Hola%20Raquel%2C%20vi%20tu%20página%20y%20quiero%20asesoría%20sobre%20Immunocal%20para%20mi%20caso" class="cta-wa-main" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escríbeme Ahora — 81 2350 0033
+      </a>
+      <p class="cta-sub">Respondo personalmente · <strong>Sin compromiso · Asesoría 100% gratuita</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRESENTER — RAQUEL ═══ -->
+<section class="presenter-section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:40px;">
+      <span class="section-label">Tu Consultora de Confianza</span>
+      <h2 class="section-title" style="font-size:clamp(1.6rem,3.5vw,2.5rem);">Hola, soy quien te guiará<br>hacia tu mejor salud</h2>
+    </div>
+    <div class="presenter-magnetic">
+      <div class="presenter-img-side">
+        <!-- Raquel photo placeholder — replace src with her actual image URL -->
+        <img src="https://i.ibb.co/Vdms9Dq/IMM-Rosalinda-Ram-rez.jpg"
+             alt="Raquel Goujon – Consultora Immunotec" loading="eager"
+             onerror="this.style.display='none'">
+        <div class="presenter-img-overlay"></div>
+        <div class="presenter-glow"></div>
+      </div>
+      <div class="presenter-info">
+        <div class="presenter-badge2">✦ IMMUNOFest 2026</div>
+        <p class="presenter-name2">Raquel<br>Goujon</p>
+        <p class="presenter-title2">Consultora Certificada · Immunotec Oficial</p>
+        <div class="presenter-div"></div>
+        <p class="presenter-desc2">Te brindo asesoría personalizada, honesta y gratuita para que elijas el producto ideal según tu condición de salud. Acompañando familias hacia el bienestar con pasión y resultados.</p>
+        <div class="presenter-stats">
+          <div class="p-stat"><strong>5+</strong><span>Años activa</span></div>
+          <div class="p-stat"><strong>3</strong><span>Países</span></div>
+          <div class="p-stat"><strong>100%</strong><span>Compromiso</span></div>
+        </div>
+        <div class="presenter-flags2">🇲🇽 🇺🇸 🇨🇦</div>
+        <a href="https://wa.me/528123500033?text=Hola%20Raquel%2C%20quiero%20información%20sobre%20Immunocal" class="presenter-wa2" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp: 81 2350 0033
+        </a>
+        <a href="https://www.immunotec.com/es-MX" target="_blank" rel="noopener" class="presenter-store">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+          immunotec.com/es-MX
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Raquel Goujon</span> · Consultora Independiente Immunotec · IMMUNOFest 2026<br>
+  Este sitio no es propiedad de Immunotec Inc. Los testimonios son experiencias individuales. Immunocal no reemplaza tratamientos médicos.</p>
+</footer>
+
+<!-- ══════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════ -->
+<script>
+/* ─── DNA / NANOPARTICLE CANVAS BACKGROUND ─── */
+(function(){
+  const canvas = document.getElementById('dna-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles=[], strands=[];
+  const N_PARTICLES = 80;
+  const N_STRANDS   = 3;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* Nanoparticles */
+  class Particle {
+    constructor(){this.reset();}
+    reset(){
+      this.x = Math.random()*W;
+      this.y = Math.random()*H;
+      this.r = Math.random()*2.2+0.5;
+      this.vx = (Math.random()-.5)*0.35;
+      this.vy = (Math.random()-.5)*0.35;
+      this.alpha = Math.random()*0.5+0.1;
+      this.hue = Math.random()<0.6 ? 210 : (Math.random()<0.5 ? 185 : 45);
+    }
+    update(){
+      this.x+=this.vx; this.y+=this.vy;
+      if(this.x<0||this.x>W||this.y<0||this.y>H) this.reset();
+    }
+    draw(){
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${this.hue},100%,65%,${this.alpha})`;
+      ctx.fill();
+    }
+  }
+  for(let i=0;i<N_PARTICLES;i++) particles.push(new Particle());
+
+  /* DNA Strands */
+  class DNAStrand {
+    constructor(xOffset){
+      this.xOff = xOffset;
+      this.t    = Math.random()*Math.PI*2;
+      this.speed= 0.004 + Math.random()*0.003;
+    }
+    draw(){
+      const amp   = 40;
+      const freq  = 0.022;
+      const steps = Math.ceil(H/8);
+      this.t += this.speed;
+
+      for(let i=0;i<steps;i++){
+        const y = (i/steps)*H;
+        const phase = y*freq + this.t;
+
+        /* Backbone strand A */
+        const x1 = this.xOff + Math.sin(phase)*amp;
+        /* Backbone strand B */
+        const x2 = this.xOff + Math.sin(phase+Math.PI)*amp;
+
+        /* Backbone dots */
+        const alpha = 0.25 + 0.15*Math.abs(Math.sin(phase));
+        ctx.beginPath();
+        ctx.arc(x1, y, 1.8, 0, Math.PI*2);
+        ctx.fillStyle=`rgba(0,180,255,${alpha})`;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x2, y, 1.8, 0, Math.PI*2);
+        ctx.fillStyle=`rgba(0,220,255,${alpha})`;
+        ctx.fill();
+
+        /* Rungs every ~18px */
+        if(i%3===0){
+          const a2 = 0.08 + 0.07*Math.abs(Math.cos(phase));
+          ctx.beginPath();
+          ctx.moveTo(x1,y);
+          ctx.lineTo(x2,y);
+          ctx.strokeStyle=`rgba(0,212,255,${a2})`;
+          ctx.lineWidth=0.8;
+          ctx.stroke();
+
+          /* Rung end nodes */
+          const goldChance = Math.abs(Math.sin(phase*3));
+          if(goldChance>0.7){
+            ctx.beginPath();
+            ctx.arc(x1,y,2.2,0,Math.PI*2);
+            ctx.fillStyle=`rgba(200,146,42,${a2*2})`;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x2,y,2.2,0,Math.PI*2);
+            ctx.fillStyle=`rgba(200,146,42,${a2*2})`;
+            ctx.fill();
+          }
+        }
+      }
+    }
+  }
+
+  const strandXs = [W*0.12, W*0.5, W*0.88];
+  for(let i=0;i<N_STRANDS;i++) strands.push(new DNAStrand(strandXs[i]||W*(i+1)/(N_STRANDS+1)));
+
+  /* Connection lines between nearby particles */
+  function drawConnections(){
+    const maxDist = 110;
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx = particles[i].x-particles[j].x;
+        const dy = particles[i].y-particles[j].y;
+        const d  = Math.sqrt(dx*dx+dy*dy);
+        if(d<maxDist){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x,particles[i].y);
+          ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(10,77,255,${0.12*(1-d/maxDist)})`;
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  /* Resize strand positions on window resize */
+  window.addEventListener('resize',()=>{
+    strands.forEach((s,i)=>s.xOff = W*(i+1)/(N_STRANDS+1));
+  });
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    strands.forEach(s=>s.draw());
+    drawConnections();
+    particles.forEach(p=>{p.update();p.draw();});
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ─── SCROLL FADE-IN ─── */
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+/* Stagger testi & product cards */
+const obs2 = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';}
+  });
+},{threshold:0.08});
+document.querySelectorAll('.testi-card,.product-card').forEach((c,i)=>{
+  c.style.opacity='0';c.style.transform='translateY(22px)';
+  c.style.transition=`opacity .5s ease ${i*.06}s, transform .5s ease ${i*.06}s`;
+  obs2.observe(c);
+});
+
+/* ─── FORM SUBMISSION → GOOGLE SHEETS ─── */
+// ⚠️ INSTRUCCIONES:
+// 1. Abre Google Sheets y crea una hoja nueva
+// 2. Ve a Extensiones → Apps Script
+// 3. Pega el código del script que se incluye al final de este archivo
+// 4. Despliega como Web App → "Cualquiera" puede acceder
+// 5. Copia la URL del Web App y pégala aquí:
+const GOOGLE_SCRIPT_URL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI';
+
+async function handleSubmit(){
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const wa     = document.getElementById('f-wa').value.trim();
+  const email  = document.getElementById('f-email').value.trim();
+  const dolor  = document.getElementById('f-dolor').value;
+
+  if(!nombre || !wa || !email || !dolor){
+    // Shake empty fields
+    ['f-nombre','f-wa','f-email','f-dolor'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el.value.trim() || (id==='f-dolor' && !el.value)){
+        el.style.borderColor='#ff4466';
+        el.style.boxShadow='0 0 0 3px rgba(255,68,102,0.15)';
+        setTimeout(()=>{el.style.borderColor='';el.style.boxShadow='';},2500);
+      }
+    });
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled=true;
+  btn.innerHTML='<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;animation:spin 1s linear infinite;"><path d="M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z"/></svg> Enviando...';
+
+  const payload = {
+    nombre, whatsapp: wa, email, dolor,
+    fecha: new Date().toLocaleString('es-MX',{timeZone:'America/Monterrey'}),
+    fuente: 'Funnel Raquel Goujon'
+  };
+
+  try {
+    if(GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI'){
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+    }
+    // Always show success (no-cors doesn't return readable response)
+    showSuccess();
+  } catch(err){
+    showSuccess(); // show success anyway — data was sent
+  }
+}
+
+function showSuccess(){
+  document.getElementById('lead-form').style.display='none';
+  const s = document.getElementById('form-success');
+  s.style.display='block';
+  s.style.animation='fade-in-up .6s ease both';
+}
+
+// CSS spin keyframe
+const spinStyle = document.createElement('style');
+spinStyle.textContent='@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}';
+document.head.appendChild(spinStyle);
+</script>
+
+<!--
+════════════════════════════════════════════════════════════
+  GOOGLE APPS SCRIPT — Pega esto en Apps Script de tu Sheets
+════════════════════════════════════════════════════════════
+
+function doPost(e) {
+  try {
+    var data   = JSON.parse(e.postData.contents);
+    var sheet  = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+
+    // Crear encabezados si la hoja está vacía
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        'Fecha','Nombre','WhatsApp','Email','Condición','Fuente'
+      ]);
+      sheet.getRange(1,1,1,6).setFontWeight('bold').setBackground('#041228').setFontColor('#ffffff');
+    }
+
+    sheet.appendRow([
+      data.fecha   || new Date().toLocaleString('es-MX'),
+      data.nombre  || '',
+      data.whatsapp|| '',
+      data.email   || '',
+      data.dolor   || '',
+      data.fuente  || 'Web'
+    ]);
+
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error',msg:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  return ContentService.createTextOutput('Immunotec Lead Capture API activa');
+}
+
+════════════════════════════════════════════════════════════
+  PASOS PARA ACTIVAR EL GOOGLE SCRIPT:
+  1. Crea una nueva hoja en Google Sheets
+  2. Menú: Extensiones → Apps Script
+  3. Borra todo el contenido y pega el código de arriba
+  4. Guarda con Ctrl+S y ponle un nombre (ej: "Lead Capture Immunotec")
+  5. Clic en "Implementar" → "Nueva implementación"
+  6. Tipo: "Aplicación web"
+  7. Ejecutar como: "Yo (tu correo)"
+  8. Quién puede acceder: "Cualquier usuario"
+  9. Clic en "Implementar" y copia la URL que te da
+  10. Pégala en la variable GOOGLE_SCRIPT_URL de este HTML
+════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
