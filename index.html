@@ -18,8 +18,9 @@ html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;position:relative;}
 
 /* ── BANNER 10 DE MAYO (única adición) ── */
-.banner-mayo{width:100%;display:block;line-height:0;position:relative;z-index:1;}
+.banner-mayo{width:100%;display:block;line-height:0;position:relative;z-index:1;padding-top:68px;}
 .banner-mayo img{width:100%;height:auto;display:block;}
+@media(max-width:480px){.banner-mayo{padding-top:52px;}}
 
 /* ── DNA CANVAS ── */
 #dna-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.22;}
@@ -348,7 +349,7 @@ footer span{color:var(--gold2);}
      BANNER 10 DE MAYO — única modificación
 ══════════════════════════════════════ -->
 <div class="banner-mayo">
-  <img src="https://i.ibb.co/WNCFBNL5/Gemini-Generated-Image-2nqw772nqw772nqw.png" alt="Gemini Generated Image 1egnnp1egnnp1egn" border="0">
+  <img src="https://i.ibb.co/qYy6CKmX/Gemini-Generated-Image-1egnnp1egnnp1egn.png" alt="Gemini Generated Image 1egnnp1egnnp1egn" border="0">
 </div>
 
 <canvas id="dna-canvas"></canvas>
